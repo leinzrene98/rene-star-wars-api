@@ -238,6 +238,13 @@ def create_new_user():
     new_user.password = body["password"]
     new_user.is_active = True
 
+    if new_user.email is None and new_user.password and new_user.password is None:
+        return jsonify({"msg": "email and password are required"}), 400
+    if new_user.email is None:
+        return jsonify({"msg": "email is required"}), 400
+    if new_user.password is None: 
+        return jsonify({"msg": "password is required"}), 400
+
     db.session.add(new_user)
     db.session.commit()
 
